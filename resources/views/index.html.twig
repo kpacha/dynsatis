@@ -1,0 +1,51 @@
+{% extends 'layout.html.twig' %}
+
+{% block title %}Local repository manager for composer{% endblock %}
+
+{% block navbar %}
+<ul class="nav navbar-nav" id="dynsatis-repoList">
+    {% for repo in repos %}
+        <li role="presentation"{% if loop.first %} class="active"{% endif %}><a href="#dynsatis-repoTab-{{ repo }}" data-url="/repo/{{ repo }}/index.html">{{ repo|capitalize }}</a></li>
+    {% endfor %}
+    </ul>
+
+    <ul class="nav navbar-nav navbar-right">
+        <li role="presentation"><a href="/admin" >Admin</a></li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <div class="tab-content">
+    {% for repo in repos %}
+        <div class="tab-pane fade {% if loop.first %} in active{% endif %}" id="dynsatis-repoTab-{{ repo }}"></div>
+    {% endfor %}
+    </div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+$(function() {
+    $( '#dynsatis-repoList a').click(function (e) {
+        e.preventDefault();
+
+        var url = $(this).attr("data-url");
+        var href = this.hash;
+        var pane = $(this);
+
+        // ajax load from data-url
+        $(href).load(url,function(result){      
+            pane.tab('show');
+        });
+    });
+
+    // load first tab content
+    {% for repo in repos %}
+        {% if loop.first %}
+    $('#dynsatis-repoTab-{{ repo }}').load($('.active a').attr("data-url"),function(result){
+        $('.active a').tab('show');
+    });
+        {% endif %}
+    {% endfor %}
+  });
+</script>
+{% endblock %}

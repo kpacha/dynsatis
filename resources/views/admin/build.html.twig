@@ -1,0 +1,24 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Building your local repository {{ name }}{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        <h1>Building your local repository {{ name }}</h1>
+    {% if status == 0 %}
+        <div class="alert alert-success" role="alert">Execution succeded!</div>
+    {% else %}
+        <div class="alert alert-danger" role="alert">Execution failed!</div>
+    {% endif %}
+        <h3>Output</h3>
+        <p>
+            <pre>
+    {% for line in output %}
+{{ line }} 
+    {% endfor %}
+            </pre>
+        </p>
+    </div>
+</div>
+{% endblock %}

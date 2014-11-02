@@ -1,0 +1,57 @@
+{% extends 'admin/new.html.twig' %}
+
+{% block title %}Edit a repository{% endblock %}
+
+{% block body_title %}<h1>Edit the local package repository [{{ name }}]</h1>{% endblock %}
+
+{% block repo_name %}{{ name }}{% endblock %}
+
+{% block repo_url %}{{ homepage }}{% endblock %}
+
+{% block repo_require_all %}{% if require_all %}checked {% endif %}{% endblock %}
+
+{% block repo_composer_repos %}
+    {% for repo in repos_composer %}
+<div class="form-group row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <input type="text" class="form-control" name="repos_composer[]" placeholder="url" value="{{ repo }}"/>
+    </div>
+    <div class="col-sm-3">
+        <button type="button" class="btn btn-danger removeButton"><i class="glyphicon glyphicon-minus"></i></button>
+    </div>
+</div>
+    {% endfor %}
+{% endblock %}
+
+{% block repo_vcs_repos %}
+    {% for repo in repos_vcs %}
+<div class="form-group row">
+    <div class="col-sm-offset-3 col-sm-6">
+        <input type="text" class="form-control" name="repos_vcs[]" placeholder="url" value="{{ repo }}"/>
+    </div>
+    <div class="col-sm-3">
+        <button type="button" class="btn btn-danger removeButton"><i class="glyphicon glyphicon-minus"></i></button>
+    </div>
+</div>
+    {% endfor %}
+{% endblock %}
+
+{% block repo_packages %}
+    {% if require %}
+        {% for name, version in require %}
+<div class="form-group row">
+    <div class="col-sm-offset-3 col-sm-4">
+        <input type="text" class="form-control" name="package_names[]" placeholder="namespace/package" value="{{ name }}"/>
+    </div>
+    <div class="col-sm-2">
+        <input type="text" class="form-control" name="package_versions[]" placeholder="*" value="{{ version }}"/>
+    </div>
+    <div class="col-sm-3">
+        <button type="button" class="btn btn-danger removeButton"><i class="glyphicon glyphicon-minus"></i></button>
+    </div>
+</div>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+
+{% block submit_msg %}Go ahead, update the repo!{% endblock %}

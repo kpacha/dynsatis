@@ -1,0 +1,29 @@
+{
+    "name": "kpacha/dynsatis",
+    "description": "Local repository manager for composer",
+    "keywords": ["satis", "composer"],
+    "type": "project",
+    "license": "Apache-2.0",
+    "authors": [
+        {
+            "name": "Kpacha",
+            "email": "kpacha666@gmail.com"
+        }
+    ],
+    "require": {
+        "composer/satis": "dev-master",
+        "composer/composer": "@dev",
+        "silex/silex": "~1.2",
+        "twig/twig": ">=1.8,<2.0-dev",
+        "symfony/filesystem": "~2.5",
+        "symfony/finder": "~2.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Kpacha\\Dynsatis\\": "src/"
+        }
+    },
+    "scripts": {
+        "post-autoload-dump": "mkdir -p web/repo resources/composer"
+    }
+}

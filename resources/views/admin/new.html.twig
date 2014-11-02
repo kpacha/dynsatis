@@ -1,0 +1,173 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Create a new repository{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="col-md-10 col-md-offset-1">
+        {% block body_title %}<h1>Create a new local package repository</h1>{% endblock %}
+        <form role="form" id="repoForm" class="form-hoizontal" method="post">
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label" for="nameInput">Name of the repository</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="nameInput" name="name" placeholder="name" value="{% block repo_name %}{% endblock %}">
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <p class="help-block">The name of the repo. Make sure you choose a meaningful one!</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label" for="homepageInput">Homepage</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="homepageInput" name="homepage" placeholder="url" value="{% block repo_url %}{% endblock %}">
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <p class="help-block">Live it blank if you are not planing to use other hostname than the default one.</p>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Config settings</label>
+                <div class="checkbox col-sm-9">
+                    <label>
+                        <input type="checkbox" name="allow_packagist"> Get packages fromt packagist
+                    </label>
+                    <p class="help-block">By enabling this, the repo will mirror the official packagist repo.</p>
+                </div>
+                <div class="checkbox col-sm-offset-3 col-sm-9">
+                    <label>
+                        <input type="checkbox" name="require_all" {% block repo_require_all %}{% endblock %}> Require all packages from each repo
+                    </label>
+                    <p class="help-block">Dump all packages from the selected repos.</p>
+                    <div class="alert alert-danger" role="alert">If you also allow packagist, it could take a long, so take care...</div>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Composer Repos</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="repos_composer[]" placeholder="url" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-success addButton" data-template="composerTemplate" data-name="repos_composer"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <p class="help-block">The url/path to the composer repo.</p>
+                </div>
+            </div>
+    {% block repo_composer_repos %}{% endblock %}
+            <!-- The field template containing the required fields and a Remove button -->
+            <div class="form-group hide row" id="composerTemplate">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <input class="form-control" type="text" name="repos_composer[]" placeholder="url" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-danger removeButton"><i class="glyphicon glyphicon-minus"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">VCS Repos</label>
+                <div class="col-sm-6">
+                    <input type="text" class="form-control" name="repos_vcs[]" placeholder="url" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-success addButton" data-template="vcsTemplate" data-name="repos_vcs"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <p class="help-block">The url/path to the vcs repo.</p>
+                </div>
+            </div>
+    {% block repo_vcs_repos %}{% endblock %}
+            <!-- The field template containing the required fields and a Remove button -->
+            <div class="form-group hide row" id="vcsTemplate">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <input class="form-control" type="text" name="repos_vcs[]" placeholder="url" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-danger removeButton"><i class="glyphicon glyphicon-minus"></i></button>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="col-sm-3 control-label">Packages</label>
+                <div class="col-sm-4">
+                    <input type="text" class="form-control" name="package_names[]" placeholder="namespace/package" />
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="package_versions[]" placeholder="*" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-success addButton" data-template="packageTemplate" data-name="package_names"><i class="glyphicon glyphicon-plus"></i></button>
+                </div>
+                <div class="col-sm-offset-3 col-sm-9">
+                    <p class="help-block">The name of the package and the version constraint.</p>
+                </div>
+            </div>
+    {% block repo_packages %}{% endblock %}
+            <!-- The field template containing the required fields and a Remove button -->
+            <div class="form-group hide row" id="packageTemplate">
+                <div class="col-sm-offset-3 col-sm-4">
+                    <input type="text" class="form-control" name="package_names[]" placeholder="namespace/package" />
+                </div>
+                <div class="col-sm-2">
+                    <input type="text" class="form-control" name="package_versions[]" placeholder="*" />
+                </div>
+                <div class="col-sm-3">
+                    <button type="button" class="btn btn-danger removeButton"><i class="glyphicon glyphicon-minus"></i></button>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-offset-3 col-sm-6">
+                    <button type="submit" class="btn btn-primary btn-lg">{% block submit_msg %}Ok, create the repo!{% endblock %}</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+
+
+$(document).ready(function() {
+    $('#repoForm')
+        // Add button click handler
+        .on('click', '.addButton', function() {
+            var templateId = $(this).attr("data-template"),
+                $parent   = $(this).parents('.form-group'),
+                $template = $('#' + templateId),
+                $clone    = $template
+                                .clone()
+                                .removeClass('hide')
+                                .removeAttr('id')
+                                .insertAfter($parent),
+                name      = $(this).attr("data-name"),
+                $origin   = $parent.find('[name="'+name+'[]"]'),
+                $option   = $clone.find('[name="'+name+'[]"]');
+            $option.val($origin.val());
+            $origin.val('');
+            if(name == 'package_names'){
+                $origin   = $parent.find('[name="package_versions[]"]'),
+                $option   = $clone.find('[name="package_versions[]"]');
+                $option.val($origin.val());
+                $origin.val('');
+            }
+        })
+
+        // Remove button click handler
+        .on('click', '.removeButton', function() {
+            var $row    = $(this).parents('.form-group'),
+                name    = $(this).attr("data-name"),
+                $option = $row.find('[name="'+name+'[]"]');
+
+            // Remove element containing the option
+            $row.remove();
+        });
+});
+    </script>
+{% endblock %}
