@@ -9,7 +9,8 @@ composer packages and repos or for mirroring third-party ones.
 
 The easiest way:
 
-    $ composer create-project kpacha/dynsatis dynsatis
+    # Use the `dev-master` version if you want to be more up-to-date.
+    $ composer create-project kpacha/dynsatis dynsatis v0.1.0
 
 Or you could clone this repo
 
