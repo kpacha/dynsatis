@@ -46,3 +46,13 @@ Example setup for Apache2 (supposing you are using the hostname `dynsatis.local`
 Remember to set the right `APPLICATION_ENV` value for your use case!
 
 Check the config files placed at `resources/config/`. Edit those files if you want to customize something.
+
+##Screenshots
+
+###Inspect repos
+
+![show](http://i61.tinypic.com/2gw75lw.png)
+
+###Edit repo
+
+![edit](http://i62.tinypic.com/1jn9sw.png)
